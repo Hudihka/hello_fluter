@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_fluter/colo_block.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,6 +33,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ColorBlock _block = ColorBlock();
+
+  @override
+  void dispose() { //метод деинит
+    _block.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +49,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Bloc with stream'),
       ),
       body: Center(
-        child: AnimatedContainer(
+        child: StreamBuilder(//если мы хотим подписать контейнер на события то его нужно обернуть в StreamBuilder
+            stream: _block.outPutStateStream,//вых поток с данными
+            initialData: Colors.red, //входные данные
+            builder: (context, snaphot) {
+              return AnimatedContainer(
           height: 100,
           width: 100,
-          color: Colors.red,
+          color: snaphot.data, //получаем новый цвет
           duration: Duration(milliseconds: 500),
+        );
+            }
         ),
       ),
       floatingActionButton: Row(
@@ -52,14 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             backgroundColor: Colors.red,
             onPressed: (){
-
+                _block.inputEventSink.add(ColorEvent.event_red); //передача событий
             },
           ),
           SizedBox(width: 10),
           FloatingActionButton(
             backgroundColor: Colors.green,
             onPressed: (){
-
+              _block.inputEventSink.add(ColorEvent.event_green); //передача событий
             },
           ),
         ],
