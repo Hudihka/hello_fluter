@@ -1,4 +1,7 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_fluter/colo_block.dart';
 
 void main() {
@@ -14,54 +17,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(
-        title: 'Flutter Demo Home Page',
-        count: 2,
-      ),
+      home: BlocProvider(  ///оборачиваем дочерний класс в блок Провайдер
+        create: (context) => ColorBlock(Colors.red), 
+        child: MyHomePage()),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title, this.count}) : super(key: key);
-
-  final String title;
-  final int count;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  ColorBlock _block = ColorBlock();
-
-  @override
-  void dispose() { //метод деинит
-    _block.dispose();
-    super.dispose();
-  }
-
-
-  @override
+class MyHomePage extends StatelessWidget{
+    @override
   Widget build(BuildContext context) {
+    ColorBlock _block = BlocProvider.of<ColorBlock>(context); //модель класса для прослушки
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bloc with stream'),
+        title: Text('BLoC with flutter_block'),
+        centerTitle: true,
       ),
       body: Center(
-        child: StreamBuilder(//если мы хотим подписать контейнер на события то его нужно обернуть в StreamBuilder
-            stream: _block.outPutStateStream,//вых поток с данными
-            initialData: Colors.red, //входные данные
-            builder: (context, snaphot) {
-              print('00000000000000000');
-              return AnimatedContainer(
-                      height: 100,
-                      width: 100,
-                      color: snaphot.data, //получаем новый цвет
-                      duration: Duration(milliseconds: 500),
-        );
-            }
+        child: BlocBuilder<ColorBlock, Color>(
+          builder: (context, currentColor) =>  //обработка ответа
+          AnimatedContainer(
+          height: 100,
+          width: 100,
+          color: currentColor,
+          duration: Duration(milliseconds: 500),
         ),
+        ), 
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -69,19 +50,22 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             backgroundColor: Colors.red,
             onPressed: (){
-                _block.inputEventSink.add(ColorEvent.event_green); //передача событий
+              ///////////передача события
+              _block.add(ColorEvent.event_red);
             },
           ),
           SizedBox(width: 10),
           FloatingActionButton(
             backgroundColor: Colors.green,
             onPressed: (){
-
-              _block.inputEventSink.add(ColorEvent.event_red); //передача событий
+              ///////////передача события
+              _block.add(ColorEvent.event_green);
             },
           ),
         ],
       ),
     );
   }
-}
+
+} 
+
