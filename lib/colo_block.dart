@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum ColorEvent {
@@ -8,18 +7,19 @@ enum ColorEvent {
   event_green
 }
 
-extension ColorEventExtention on ColorEvent {
+// extension ColorEventExtention on ColorEvent {
 
-  Color get getColor {
-    switch (this){
-      case ColorEvent.event_red:
-        return Colors.red;
-      case ColorEvent.event_green:
-        return Colors.green;
-    }
-  }
+//   // ignore: missing_return
+//   Color get getColor {
+//     switch (this){
+//       case ColorEvent.event_red:
+//         return Colors.red;
+//       case ColorEvent.event_green:
+//         return Colors.green;
+//     }
+//   }
 
-}
+// }
 
 
 
@@ -35,7 +35,7 @@ class ColorBlock {
   }
 
 
-  Color _color = ColorEvent.event_red.getColor;
+  Color _color = Colors.red;
 
   final _inputEventController = StreamController<ColorEvent>(); //стрим контроллер вх данные
   //свойство класса
@@ -49,12 +49,17 @@ class ColorBlock {
   
   void _mapEventToState(ColorEvent event) {
     if (event == ColorEvent.event_red){
-      _color = ColorEvent.event_green.getColor;
-    } if (event == ColorEvent.event_green){
-      _color = ColorEvent.event_red.getColor;
+      _color = Colors.green;
+    } else if (event == ColorEvent.event_green){
+      _color = Colors.red;
     } else {
-      throw Exception('ERROR');
+      print(event);
+      throw Exception('ERROR____________');
     }
+
+    // print(event);
+
+    // _color = Colors.green;
     _outputStateController.sink.add(_color);
   }
 

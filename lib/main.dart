@@ -53,11 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
             stream: _block.outPutStateStream,//вых поток с данными
             initialData: Colors.red, //входные данные
             builder: (context, snaphot) {
+              print('00000000000000000');
               return AnimatedContainer(
-          height: 100,
-          width: 100,
-          color: snaphot.data, //получаем новый цвет
-          duration: Duration(milliseconds: 500),
+                      height: 100,
+                      width: 100,
+                      color: snaphot.data, //получаем новый цвет
+                      duration: Duration(milliseconds: 500),
         );
             }
         ),
@@ -68,14 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             backgroundColor: Colors.red,
             onPressed: (){
-                _block.inputEventSink.add(ColorEvent.event_red); //передача событий
+                _block.inputEventSink.add(ColorEvent.event_green); //передача событий
             },
           ),
           SizedBox(width: 10),
           FloatingActionButton(
             backgroundColor: Colors.green,
             onPressed: (){
-              _block.inputEventSink.add(ColorEvent.event_green); //передача событий
+
+              _block.inputEventSink.add(ColorEvent.event_red); //передача событий
             },
           ),
         ],
