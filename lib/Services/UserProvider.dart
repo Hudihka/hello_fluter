@@ -1,6 +1,7 @@
 
 import 'package:http/http.dart' as http;
 import 'package:hello_fluter/Models/User.dart';
+import 'dart:convert';
 
 class UserProvider {
   // Future значит обещание, 
@@ -11,8 +12,8 @@ class UserProvider {
   //await применяем при async работе
     final response = await http.get('https://jsonplaceholder.typicode.com/users');
 
-    if (response.statuscode == 200){
-      final List<User> userJson = json.decode(response.body);
+    if (response.statusCode == 200){
+      final List<dynamic> userJson = json.decode(response.body);
       return userJson.map((json) => User.fromJson(json)).toList();
     } else {
       throw Exception('---------ERROR---------');
