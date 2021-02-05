@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//по сути это тейбл вью
 class UserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
