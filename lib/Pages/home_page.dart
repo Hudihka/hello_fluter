@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UserBlock>(
-      create: (context) => UserBlock(usersRepository: usersRepository),
+      create: (context) => UserBlock(usersRepository),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
