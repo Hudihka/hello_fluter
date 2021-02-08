@@ -2,14 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hello_fluter/Bloc/UserBlock.dart';
-import 'package:hello_fluter/Bloc/UserState.dart';
+import 'package:hello_fluter/Cubit/UserCubit.dart';
+import 'package:hello_fluter/Cubit/UserState.dart';
 
 //по сути это тейбл вью
 class UserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBlock, UserState>(builder: (context, state) {
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        
       if (state is UserEmptyState) {
         return Center(
           child: Text(

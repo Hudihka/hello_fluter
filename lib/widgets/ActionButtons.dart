@@ -1,32 +1,33 @@
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_fluter/Bloc/UserBlock.dart';
 import 'package:hello_fluter/Bloc/UserEvent.dart';
+import 'package:hello_fluter/Cubit/UserCubit.dart';
 
 class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserBlock userBlock = BlocProvider.of<UserBlock>(context);
+    // final UserBlock userBlock = BlocProvider.of<UserBlock>(context);
+    final UserCubit userCubit = context.read();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        RaisedButton(
+        ElevatedButton(
           child: Text('Load'),
           onPressed: () {
-            userBlock.add(UserLoadEvent());
+            userCubit.fetchUser();
           },
-          color: Colors.green,
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red) ),
+          // color: Colors.green,
         ),
         SizedBox(width: 8),
-        RaisedButton(
+        ElevatedButton(
           child: Text('Clear'),
           onPressed: () {
-            userBlock.add(UserClearEvent());
+            userCubit.clearUser();
           },
-          color: Colors.red,
+          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green) ),
         ),
       ],
     );
