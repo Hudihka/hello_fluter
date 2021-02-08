@@ -8,7 +8,7 @@ import 'package:hello_fluter/Services/UsersRepository.dart';
 
 class UserBlock extends Bloc<UserEvent, UserState> {
   final UsersRepository usersRepository;
-  UserBlock({this.usersRepository}) : assert(usersRepository != null);
+  UserBlock({this.usersRepository}) : assert(usersRepository != null), super(null);
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {//async* работа с потоком
